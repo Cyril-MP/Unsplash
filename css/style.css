@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+    font-family: 'Comfortaa', cursive;
+    background-color: rgb(0, 0, 0);
+    color: rgb(239, 229, 83);
+}
+
+header{
+    border-bottom: 5px solid rgb(25, 0, 255);
+}
+
+.container{
+    width: 96%;
+    margin: auto;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 0;
+}
+
+.nav h2{
+    font-size: 4.5rem;
+    font-weight: bolder;
+}
+
+.search-box{
+    position: relative;
+    width: 370px;
+}
+
+.search-box input{
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 7px;
+    border-radius: 30px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid rgb(0, 21, 255);
+}
+
+input:focus{
+    box-shadow: 0 0 5px rgb(0, 68, 255);
+    border: 1px solid rgb(225, 255, 0);
+}
+
+.search-box i{
+    color: rgb(0, 8, 255);
+    position: absolute;
+    top: 25%;
+    right: 4%;
+    transition: 1s;
+}
+
+.search-box i:hover{
+    color: rgb(2, 65, 255);
+}
+
+.grid{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.img{
+    width: 380px;
+    height: 200px;
+    margin-top: 15px;
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 2px;
+}
+
+@media(max-width:768px){
+    .img{
+        width: 100%;
+    }
+
+    .nav{
+        justify-content: center;
+    }
+
+    .nav h2{
+        padding: 5px 0;
+    }
+}
+
+@media(max-width:480px){
+    .nav h2{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .search-box{
+        width: 80%;
+        margin: auto;
+    }
+
+    .search-box input{
+        font-size: 3rem;
+    }
+}
+
