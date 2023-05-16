@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <!-- favicon -->
+  <title>Unsplash</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="css/style.css" rel="stylesheet"/>
   <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
-  <title>Unsplash API</title>
 </head>
+
 <body>
+  <div class="parent">
+    <h1>Home Of Photos</h1>
 
-   <header>
-     <div class="container">
-       <div class="nav">
-        <h2><i class="fa-solid fa-globe" style="color: rgb(43, 0, 255);"></i> UNSPLASH API</h2>
-        <div class="search-box">
-          <input type="text" id="input" placeholder="seach..."><i onclick="loadImg()" class="fa-solid fa-magnifying-glass"></i>
-        </div>
-       </div> 
-     </div>
-   </header>
- 
-   
-   <div class="container">
-      <div class="grid"></div>
-   </div>
+    <form action="">
+      <input type="text" name="searc" placeholder="search" id="input" />
 
+      <input id="submit" type="submit" value="submit" />
+    </form>
 
+    <div class="grid"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+    integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

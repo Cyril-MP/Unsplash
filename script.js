@@ -1,62 +1,94 @@
-const input = document.getElementById('input');
-const grid = document.getElementsByClassName('grid')[0];
+const grid = document.querySelector('.grid')
+const input = document.getElementById('input')
+const submitBtn = document.getElementById('submit')
 
-window.addEventListener('load', dayNightMode)
-
-
-input.addEventListener('keydown', function(event){
-  if(event.key === 'Enter')
-     loadImg();
+const macyInstance = Macy({
+    container: grid,
+    breakAt: {
+        1600: 5,
+        1200: 4,
+        900: 3,
+        600: 2,
+        400: 1,
+    },
+    margin: {
+        x: 15,
+        y: 15,
+    },
 })
 
-function loadImg(){
-    removeImage();
+const key = '&per_page=50&client_id=VyN3kpbtQQCUN2D5Ff5j4UUev_hICqW4zcfsRmpJsn8'
 
-    const url = 'https://api.unsplash.com/search/photos/?query=' + input.value +'&per_page=50&client_id=VyN3kpbtQQCUN2D5Ff5j4UUev_hICqW4zcfsRmpJsn8';
-    
+const API_URL = 'https://api.unsplash.com'
 
-    fetch(url)
+const fixStartUpBug = () => {
+    macyInstance.runOnImageLoad(function () {
+        macyInstance.recalculate(true, true)
+        var evt = document.createEvent('UIEvents')
+        evt.initUIEvent('resize', true, false, window, 0)
+        window.dispatchEvent(evt)
+    }, true)
+}
 
-    .then(response =>{
-        if (response.ok)
-            return response.json();
-        else
-           alert(response.status)           
-    })
-    
-    .then(data =>{
-        const imageNodes = [];
-        for(let i = 0; i < data.results.length;i++){
-            imageNodes[i] = document.createElement('div');
-            imageNodes[i].className = 'img';
-            imageNodes[i].style.backgroundImage = 'url('+data.results[i].urls.raw+')';
-            imageNodes[i].addEventListener('dblclick',
-            function(){
-                windows.open(data.results[i].links.download,
-                '_blank');
-            })
-            grid.appendChild(imageNodes[i]);
-        }
+const addImagesInDom = images => {
+    images.forEach(image => {
+        const container = document.createElement('div')
+
+        const img = document.createElement('img')
+
+        img.src = image
+        container.append(img)
+
+        grid.append(container)
     })
 }
 
-function removeImage(){
-    grid.innerHTML = '';
+const intializeImages = async () => {
+    let { data: images } = await axios.get(
+        `${API_URL}/photos/?client_id=${key}&per_page=50`
+    )
+
+    images = images.map(image => image.urls.regular)
+
+    addImagesInDom(images)
+
+    fixStartUpBug()
 }
 
-function dayNightMode(){
-    const date = new Date();
-    const hour = date.getHours ();
-    
-    if(hour >= 7 && hour <= 19){
-       document.body.style.backgroundColor =
-       'whitesmoke'; 
-       document.body.style.color = 'black'; 
+intializeImages()
+
+const searchImages = async query => {
+    let {
+        data: { results: images },
+    } = await axios.get(
+        `${API_URL}/search/photos/?client_id=${key}&query=${query}&per_page=50`
+    )
+
+    images = images.map(image => image.urls.regular)
+
+    return images
+}
+
+const removeAllChild = parent => {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild)
     }
-    else{
-        document.body.style.backgroundColor = 'black';
-        document.body.style.color = 'white';
-    } 
-   
 }
 
+const handleSubmit = async event => {
+    event.preventDefault()
+
+    const query = input.value
+
+    if (!query) return false
+
+    const images = await searchImages(query)
+
+    removeAllChild(grid)
+
+    addImagesInDom(images)
+
+    fixStartUpBug()
+}
+
+submitBtn.addEventListener('click', handleSubmit)
